@@ -18,7 +18,7 @@ public enum Symbol {
             }
         }
 
-        return null;
+        throw new RuntimeException("Invalid card suit");
     }
 
     public String toString() {

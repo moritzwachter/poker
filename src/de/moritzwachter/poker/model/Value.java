@@ -30,7 +30,7 @@ public enum Value {
             }
         }
 
-        return null;
+        throw new RuntimeException("Invalid card value");
     }
 
     public String toString() {

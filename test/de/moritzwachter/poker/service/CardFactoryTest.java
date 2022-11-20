@@ -10,11 +10,29 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CardFactoryTest {
     @Test
-    void wrongLengthThrowsExceptions() {
+    void wrongLengthThrowsException() {
         assertThrows(
             RuntimeException.class,
             () -> CardFactory.fromString("ABC"),
             "Invalid card value"
+        );
+    }
+
+    @Test
+    void wrongValueThrowsException() {
+        assertThrows(
+            RuntimeException.class,
+            () -> CardFactory.fromString("BH"),
+            "Invalid card value"
+        );
+    }
+
+    @Test
+    void wrongSuitThrowsException() {
+        assertThrows(
+            RuntimeException.class,
+            () -> CardFactory.fromString("TB"),
+            "Invalid card suit"
         );
     }
 
