@@ -21,7 +21,17 @@ public class Dealer {
 
     public void dealNewRound(int playerCount) {
         Long seed = new Random().nextLong();
-        // Flush: -4906000838828884205
+        // Flush: -4906000838828884205 (9 players)
+        // Straight: 2029875863529557528 (9 players)
+        // Straight Flush: 4618207293208155648 (9 players)
+
+        dealNewRound(playerCount, seed);
+    }
+
+    public void dealNewRound(int playerCount, Long seed) {
+        pocketCards = new ArrayList<>();
+        communityCards = new Hand();
+
         System.out.println("Seed " + seed);
         deck = new Deck(seed);
 

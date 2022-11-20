@@ -37,7 +37,11 @@ public class Hand {
         return hand.stream().map(Card::toString).collect(Collectors.joining(" "));
     }
 
-    public String toPrettyString() {
+    public String toPrettyString(boolean sorted) {
+        if (sorted) {
+            return hand.stream().sorted().map(Card::toPrettyString).collect(Collectors.joining(" "));
+        }
+
         return hand.stream().map(Card::toPrettyString).collect(Collectors.joining(" "));
     }
 }

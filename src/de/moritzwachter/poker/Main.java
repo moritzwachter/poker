@@ -9,17 +9,19 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         Dealer dealer = new Dealer();
-        dealer.dealNewRound(9);
+
+        dealer.dealNewRound(9, 4618207293208155648L);
 
         Hand communityCards = dealer.getCommunityCards();
         List<Hand> playerCards = dealer.getPocketCards();
+
 
         System.out.println("Community Cards");
         communityCards.getHand().stream().forEach(c -> System.out.print(c.toPrettyString() + " "));
 
         System.out.println("");
         for (int i = 0; i < playerCards.size(); i++) {
-            System.out.print("\nPlayer " + (i+1) + ": ");
+            System.out.print("\nPlayer " + (i + 1) + ": ");
 
             playerCards.get(i).getHand().stream().forEach(c -> System.out.print(c.toPrettyString()));
         }
@@ -28,6 +30,5 @@ public class Main {
             Hand hand = Hand.fromHands(communityCards, playerCard);
             HandComparator.evaluateHand(hand);
         }
-
     }
 }
