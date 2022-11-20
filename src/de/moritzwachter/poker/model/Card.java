@@ -5,7 +5,7 @@ import lombok.Data;
 
 @Data
 @AllArgsConstructor
-public class Card {
+public class Card implements Comparable<Card> {
     public static final String ANSI_RESET = "\u001B[0m";
 
     protected Value cardValue;
@@ -23,5 +23,15 @@ public class Card {
             bgColor = "\u001B[40m";
         }
         return bgColor + cardValue + cardSymbol.toPrettyString() + ANSI_RESET;
+    }
+
+    @Override
+    public int compareTo(Card o) {
+        return cardValue.compareTo(o.cardValue);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return cardValue == ((Card) obj).getCardValue();
     }
 }
