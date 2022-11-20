@@ -2,6 +2,7 @@ package de.moritzwachter.poker.service;
 
 import de.moritzwachter.poker.model.Card;
 import de.moritzwachter.poker.model.Deck;
+import de.moritzwachter.poker.model.Hand;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -13,17 +14,20 @@ public class Dealer {
     private Deck deck;
 
     @Getter
-    private List<List<Card>> pocketCards = new ArrayList<List<Card>>();
+    private List<Hand> pocketCards = new ArrayList<>();
 
     @Getter
-    private List<Card> communityCards = new ArrayList<>();
+    private Hand communityCards = new Hand();
 
     public void dealNewRound(int playerCount) {
-        deck = new Deck(new Random().nextLong());
+        Long seed = new Random().nextLong();
+        // Flush: -4906000838828884205
+        System.out.println("Seed " + seed);
+        deck = new Deck(seed);
 
         for (int i = 0; i < playerCount * 2; i++) {
             if (i < playerCount) {
-                pocketCards.add(i, new ArrayList<>());
+                pocketCards.add(i, new Hand());
             }
 
             pocketCards.get(i % playerCount).add(deck.dealCard());
