@@ -12,4 +12,8 @@ public class Card {
     public String toString() {
         return cardValue + cardSymbol.toString();
     }
+
+    public String toPrettyString() {
+        return cardValue + cardSymbol.toPrettyString();
+    }
 }

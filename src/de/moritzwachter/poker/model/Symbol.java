@@ -24,4 +24,14 @@ public enum Symbol {
     public String toString() {
         return symbol.toString();
     }
+
+    public String toPrettyString() {
+        return switch (symbol) {
+            case 'S' -> "♤";
+            case 'H' -> "♡";
+            case 'D' -> "♢";
+            case 'C' -> "♧";
+            default -> "";
+        };
+    }
 }
