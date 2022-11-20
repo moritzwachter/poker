@@ -3,10 +3,12 @@ package de.moritzwachter.poker.service;
 import de.moritzwachter.poker.model.Card;
 import de.moritzwachter.poker.model.Hand;
 import de.moritzwachter.poker.model.Symbol;
+import de.moritzwachter.poker.model.Value;
 
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public class HandComparator {
 
@@ -24,16 +26,27 @@ public class HandComparator {
     }
 
     public static boolean hasStraight(Hand hand) {
-        hand.getHand().sort(Comparator.naturalOrder());
+        List<Card> listOfCards = hand.getHand();
+        listOfCards.sort(Comparator.naturalOrder());
         int straightLength = 1;
 
-        for (int i=0; i < hand.getHand().size() - 1; i++) {
-            Card card = hand.getHand().get(i);
-            Card nextCard = hand.getHand().get(i + 1);
+        for (int i = 0; i < listOfCards.size() - 1; i++) {
+            Card card = listOfCards.get(i);
+            Card nextCard = listOfCards.get(i + 1);
 
             if (card.getCardValue().value + 1 == nextCard.getCardValue().value) {
                 straightLength++;
             }
+        }
+
+        // Special case: 2 3 4 5 ... A
+        if (
+            straightLength == 4
+            && listOfCards.get(0).getCardValue() == Value.TWO
+            && listOfCards.get(3).getCardValue() == Value.FIVE
+            && listOfCards.get(listOfCards.size() - 1).getCardValue() == Value.ACE
+        ) {
+            straightLength++;
         }
 
         return straightLength >= 5;
@@ -85,7 +98,6 @@ public class HandComparator {
 
     public static boolean hasStraightFlush(Hand hand) {
         if (hasFlush(hand)) {
-
             ArrayList<Hand> hands = new ArrayList<>();
             hands.add(getPartialHandBySuit(hand, Symbol.DIAMONDS));
             hands.add(getPartialHandBySuit(hand, Symbol.HEARTS));
