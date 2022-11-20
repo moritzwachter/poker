@@ -27,10 +27,10 @@ public enum Symbol {
 
     public String toPrettyString() {
         return switch (symbol) {
-            case 'S' -> "♤";
-            case 'H' -> "♡";
-            case 'D' -> "♢";
-            case 'C' -> "♧";
+            case 'S' -> "♠";
+            case 'H' -> "♥";
+            case 'D' -> "♦";
+            case 'C' -> "♣";
             default -> "";
         };
     }
