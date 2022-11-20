@@ -10,4 +10,18 @@ public enum Symbol {
     Symbol(Character symbol) {
         this.symbol = symbol;
     }
+
+    public static Symbol getByString(Character symbol) {
+        for (Symbol sym : Symbol.values()) {
+            if (sym.symbol.equals(symbol)) {
+                return sym;
+            }
+        }
+
+        return null;
+    }
+
+    public String toString() {
+        return symbol.toString();
+    }
 }

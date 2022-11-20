@@ -22,4 +22,18 @@ public enum Value {
         this.value = value;
         this.text = text;
     }
+
+    public static Value getByString(Character text) {
+        for (Value val : Value.values()) {
+            if (val.text.equals(text)) {
+                return val;
+            }
+        }
+
+        return null;
+    }
+
+    public String toString() {
+        return text.toString();
+    }
 }
