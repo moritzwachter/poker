@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Dealer dealer = new Dealer();
 
-        dealer.dealNewRound(9, 6901695129663031837L);
+        dealer.dealNewRound(9);
 
         Hand communityCards = dealer.getCommunityCards();
         List<Hand> playerCards = dealer.getPocketCards();

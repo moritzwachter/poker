@@ -37,6 +37,8 @@ public class HandEvaluator {
 
             if (card.getCardValue().value + 1 == nextCard.getCardValue().value) {
                 straightLength++;
+            } else {
+                straightLength = 1;
             }
         }
 

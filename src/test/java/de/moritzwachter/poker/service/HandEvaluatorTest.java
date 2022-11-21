@@ -34,6 +34,9 @@ public class HandEvaluatorTest {
     void hasStraight() {
         Hand hand = new Hand("2H 3C 4H 5H 6H");
         assertTrue(HandEvaluator.hasStraight(hand));
+
+        Hand noStraight = new Hand("3S 4C 6S TD JD QC KD");
+        assertFalse(HandEvaluator.hasStraight(noStraight));
     }
 
     @Test
