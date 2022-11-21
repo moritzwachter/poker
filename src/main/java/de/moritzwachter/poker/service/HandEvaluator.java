@@ -22,6 +22,7 @@ public class HandEvaluator {
         System.out.print(hasFlush(hand) ? "Flush\n" : "");
         System.out.print(hasStraight(hand) ? "Straight\n" : "");
         System.out.print(hasStraightFlush(hand) ? "Straight Flush\n" : "");
+        System.out.print(hasRoyalFlush(hand) ? "Royal Flush\n" : "");
         return "";
     }
 
