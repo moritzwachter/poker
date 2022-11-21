@@ -1,9 +1,11 @@
 package de.moritzwachter.poker.model;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 public class Card implements Comparable<Card> {
     public static final String ANSI_RESET = "\u001B[0m";
