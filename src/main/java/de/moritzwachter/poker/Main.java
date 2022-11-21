@@ -2,7 +2,7 @@ package de.moritzwachter.poker;
 
 import de.moritzwachter.poker.model.Hand;
 import de.moritzwachter.poker.service.Dealer;
-import de.moritzwachter.poker.service.HandComparator;
+import de.moritzwachter.poker.service.HandEvaluator;
 
 import java.util.List;
 
@@ -28,7 +28,7 @@ public class Main {
 
         for (Hand playerCard : playerCards) {
             Hand hand = Hand.fromHands(communityCards, playerCard);
-            HandComparator.evaluateHand(hand);
+            HandEvaluator.evaluateHand(hand);
         }
     }
 }
