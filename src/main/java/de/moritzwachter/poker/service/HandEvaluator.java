@@ -12,18 +12,40 @@ import java.util.List;
 
 public class HandEvaluator {
 
-    public static String evaluateHand(Hand hand) {
-        System.out.println("\n" + hand.toPrettyString(true));
+    public static Float evaluateHand(Hand hand) {
+        // System.out.println("\n" + hand.toPrettyString(true));
 
         /*System.out.print(hasPair(hand) ? "Pair\n" : "");
+        System.out.print(hasTwoPair(hand) ? "Two Pair\n" : "");
         System.out.print(hasThreeOfAKind(hand) ? "Three of a kind\n" : "");
-        System.out.print(hasFullHouse(hand) ? "Full house\n" : "");*/
+        System.out.print(hasFullHouse(hand) ? "Full house\n" : "");
         System.out.print(hasFourOfAKind(hand) ? "Four of a kind\n" : "");
         System.out.print(hasFlush(hand) ? "Flush\n" : "");
         System.out.print(hasStraight(hand) ? "Straight\n" : "");
         System.out.print(hasStraightFlush(hand) ? "Straight Flush\n" : "");
-        System.out.print(hasRoyalFlush(hand) ? "Royal Flush\n" : "");
-        return "";
+        System.out.print(hasRoyalFlush(hand) ? "Royal Flush\n" : "");*/
+
+        if (hasRoyalFlush(hand)) {
+            return 15.0f;
+        } else if (hasStraight(hand)) {
+            return 14.0f;
+        } else if (hasFourOfAKind(hand)) {
+            return 13.0f;
+        } else if (hasFullHouse(hand)) {
+            return 12.0f;
+        } else if (hasFlush(hand)) {
+            return 11.0f;
+        } else if (hasStraight(hand)) {
+            return 10.0f;
+        } else if (hasThreeOfAKind(hand)) {
+            return 9.0f;
+        } else if (hasTwoPair(hand)) {
+            return 8.0f;
+        } else if (hasPair(hand)) {
+            return 7.0f;
+        } else {
+            return 6.0f;
+        }
     }
 
     public static boolean hasStraight(Hand hand) {

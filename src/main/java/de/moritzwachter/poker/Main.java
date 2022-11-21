@@ -2,8 +2,10 @@ package de.moritzwachter.poker;
 
 import de.moritzwachter.poker.model.Hand;
 import de.moritzwachter.poker.service.Dealer;
+import de.moritzwachter.poker.service.HandComparator;
 import de.moritzwachter.poker.service.HandEvaluator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Main {
@@ -26,9 +28,14 @@ public class Main {
             playerCards.get(i).getHand().stream().forEach(c -> System.out.print(c.toPrettyString()));
         }
 
+        List<Hand> listOfHands = new ArrayList<>();
         for (Hand playerCard : playerCards) {
             Hand hand = Hand.fromHands(communityCards, playerCard);
-            HandEvaluator.evaluateHand(hand);
+            listOfHands.add(hand);
         }
+
+        Hand winner = HandComparator.getWinner(listOfHands);
+        System.out.println("\n======================");
+        System.out.println("Winner: " + HandEvaluator.evaluateHand(winner));
     }
 }
