@@ -16,4 +16,23 @@ public class HandTest {
 
         assertEquals("2S 3C 4D 5S 6H AH KD", hand.getHandString());
     }
+
+    @Test
+    void getSortedHandValueString() {
+        Hand hand = new Hand("2S 3C 4D 5S 6H");
+        assertEquals("2 3 4 5 6", hand.getHandValueString());
+
+        Hand unordered = new Hand("AS 3C JD 5S QH");
+        assertEquals("A 3 J 5 Q", unordered.getHandValueString());
+        assertEquals("3 5 J Q A", unordered.sorted().getHandValueString());
+    }
+
+
+    @Test
+    void without() {
+        Hand hand = new Hand("TH TC 2C 2D 4S TS");
+        Hand without = new Hand("TC 2D");
+
+        assertEquals("4S", hand.without(without).getHandString());
+    }
 }

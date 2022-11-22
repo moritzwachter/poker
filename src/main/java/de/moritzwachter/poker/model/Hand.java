@@ -37,8 +37,24 @@ public class Hand {
         return hand.stream().map(Card::toString).collect(Collectors.joining(" "));
     }
 
-    public String getSortedHandString() {
-        return hand.stream().sorted().map(Card::toString).collect(Collectors.joining(" "));
+    public String getHandValueString() {
+        return hand.stream().map(c -> c.getCardValue().toString()).collect(Collectors.joining(" "));
+    }
+
+    public Hand without(Hand without) {
+        Hand partialHand = new Hand();
+
+        for (Card card : getHand()) {
+            if (!without.getHand().contains(card)) {
+                partialHand.add(card);
+            }
+        }
+
+        return partialHand;
+    }
+
+    public Hand sorted() {
+        return new Hand(hand.stream().sorted().toList());
     }
 
     public String toPrettyString(boolean sorted) {

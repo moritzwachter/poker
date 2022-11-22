@@ -99,14 +99,6 @@ public class HandEvaluatorTest {
     }
 
     @Test
-    void getWithoutValue() {
-        Hand hand = new Hand("TH TC 2C 2D 4S TS");
-        Hand without = new Hand("TC 2D");
-
-        assertEquals("4S", HandEvaluator.getWithoutValue(hand, without).getHandString());
-    }
-
-    @Test
     void hasRoyalFlush() {
         Hand hand = new Hand("TH JH QH KH AH");
         Hand hand2 = new Hand("TC JC QC KC AC");

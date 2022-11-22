@@ -24,33 +24,36 @@ public class HandEvaluator {
         System.out.print(hasStraight(hand) ? "Straight\n" : "");
         System.out.print(hasStraightFlush(hand) ? "Straight Flush\n" : "");
         System.out.print(hasRoyalFlush(hand) ? "Royal Flush\n" : "");*/
-
+        float score;
+        
         if (hasRoyalFlush(hand)) {
-            return 15.0f;
-        } else if (hasStraight(hand)) {
-            return 14.0f;
+            score = 10.0f;
+        } else if (hasStraightFlush(hand)) {
+            score = 9.0f;
         } else if (hasFourOfAKind(hand)) {
-            return 13.0f;
+            score = 8.0f;
         } else if (hasFullHouse(hand)) {
-            return 12.0f;
+            score = 7.0f;
         } else if (hasFlush(hand)) {
-            return 11.0f;
+            score = 6.0f;
         } else if (hasStraight(hand)) {
-            return 10.0f;
+            score = 5.0f;
         } else if (hasThreeOfAKind(hand)) {
-            return 9.0f;
+            score = 4.0f;
         } else if (hasTwoPair(hand)) {
-            return 8.0f;
+            score = 3.0f;
         } else if (hasPair(hand)) {
-            return 7.0f;
+            score = 2.0f;
         } else {
-            return 6.0f;
+            score = 1.0f;
         }
+
+        return score;
     }
 
     public static boolean hasStraight(Hand hand) {
-        List<Card> listOfCards = hand.getHand();
-        listOfCards.sort(Comparator.naturalOrder());
+        Hand sortedHand = hand.sorted();
+        List<Card> listOfCards = sortedHand.getHand();
         int straightLength = 1;
 
         for (int i = 0; i < listOfCards.size() - 1; i++) {
@@ -65,13 +68,8 @@ public class HandEvaluator {
         }
 
         // Special case: 2 3 4 5 ... A
-        if (
-            straightLength == 4
-            && listOfCards.get(0).getCardValue() == Value.TWO
-            && listOfCards.get(3).getCardValue() == Value.FIVE
-            && listOfCards.get(listOfCards.size() - 1).getCardValue() == Value.ACE
-        ) {
-            straightLength++;
+        if (sortedHand.getHandValueString().contains("2 3 4 5") && sortedHand.getHandValueString().contains("A")) {
+            return true;
         }
 
         return straightLength >= 5;
@@ -144,18 +142,6 @@ public class HandEvaluator {
         return partialHand;
     }
 
-    public static Hand getWithoutValue(Hand hand, Hand without) {
-        Hand partialHand = new Hand();
-
-        for (Card card : hand.getHand()) {
-            if (!without.getHand().contains(card)) {
-                partialHand.add(card);
-            }
-        }
-
-        return partialHand;
-    }
-
     public static boolean hasStraightFlush(Hand hand) {
         if (hasFlush(hand)) {
             ArrayList<Hand> hands = new ArrayList<>();
@@ -173,6 +159,6 @@ public class HandEvaluator {
     }
 
     public static boolean hasRoyalFlush(Hand hand) {
-        return hand.getSortedHandString().contains("TH JH QH KH AH");
+        return hand.sorted().getHandString().contains("TH JH QH KH AH");
     }
 }
