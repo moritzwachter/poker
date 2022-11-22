@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -57,11 +58,19 @@ public class Hand {
         return new Hand(hand.stream().sorted().toList());
     }
 
+    public Hand inverse() {
+        return new Hand(hand.stream().sorted(Collections.reverseOrder()).toList());
+    }
+
     public String toPrettyString(boolean sorted) {
         if (sorted) {
             return hand.stream().sorted().map(Card::toPrettyString).collect(Collectors.joining(" "));
         }
 
         return hand.stream().map(Card::toPrettyString).collect(Collectors.joining(" "));
+    }
+
+    public Hand getHighestCards(int i) {
+        return new Hand(this.sorted().inverse().getHand().subList(0, i));
     }
 }
