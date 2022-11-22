@@ -99,6 +99,24 @@ public class HandEvaluatorTest {
     }
 
     @Test
+    void getStraight() {
+        Hand hand = new Hand("AH 2H 3C 4H 5D 6S");
+        assertEquals("2H 3C 4H 5D 6S", HandEvaluator.getStraight(hand).getHandString());
+
+        Hand aceStraight = new Hand("2H 3C 4H 5H 7H 8C AC");
+        assertEquals("2H 3C 4H 5H AC", HandEvaluator.getStraight(aceStraight).getHandString());
+    }
+
+    @Test
+    void getStraightFlush() {
+        Hand hand = new Hand("AH KH QH JH TH 5D 7S");
+        assertEquals("TH JH QH KH AH", HandEvaluator.getStraightFlush(hand).getHandString());
+
+        Hand aceStraight = new Hand("2H 3H 4H 5H 7H 8C AH");
+        assertEquals("2H 3H 4H 5H AH", HandEvaluator.getStraightFlush(aceStraight).getHandString());
+    }
+
+    @Test
     void hasRoyalFlush() {
         Hand hand = new Hand("TH JH QH KH AH");
         Hand hand2 = new Hand("TC JC QC KC AC");
@@ -107,5 +125,33 @@ public class HandEvaluatorTest {
         assertTrue(HandEvaluator.hasStraightFlush(hand2));
     }
 
+    @Test
+    void getFinalHand() {
+        Hand royalFlush = new Hand("AC TH JH QH KH AH TC");
+        assertEquals("AH KH QH JH TH", HandEvaluator.getFinalHand(royalFlush).getHandString());
 
+        Hand fourOfAKind = new Hand("2H 2D 2C 2S 5C TC JH");
+        assertEquals("2H 2D 2C 2S JH", HandEvaluator.getFinalHand(fourOfAKind).getHandString());
+
+        Hand straightFlush = new Hand("AC TH 9H QH JH 8H TC");
+        assertEquals("QH JH TH 9H 8H", HandEvaluator.getFinalHand(straightFlush).getHandString());
+
+        Hand fullHouse = new Hand("2H 2D 2C 5H 5C TC JH");
+        assertEquals("2H 2D 2C 5H 5C", HandEvaluator.getFinalHand(fullHouse).getHandString());
+
+        Hand flush = new Hand("AC TH 9H QH JH 2H TC");
+        assertEquals("QH JH TH 9H 2H", HandEvaluator.getFinalHand(flush).getHandString());
+
+        Hand threeOfAKind = new Hand("2H 2D 2C 3H 5C TC JH");
+        assertEquals("2H 2D 2C JH TC", HandEvaluator.getFinalHand(threeOfAKind).getHandString());
+
+        Hand twoPair = new Hand("TH TC 3D 3S KD AC");
+        assertEquals("TH TC 3D 3S AC", HandEvaluator.getFinalHand(twoPair).getHandString());
+
+        Hand pair = new Hand("TH TC 2C 3D 4S AC KD");
+        assertEquals("TH TC AC KD 4S", HandEvaluator.getFinalHand(pair).getHandString());
+
+        Hand highCard = new Hand("TH 9C 6S 5C 3S");
+        assertEquals("TH 9C 6S 5C 3S", HandEvaluator.getFinalHand(highCard).getHandString());
+    }
 }
