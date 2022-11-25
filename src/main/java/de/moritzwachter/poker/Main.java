@@ -34,8 +34,9 @@ public class Main {
             listOfHands.add(hand);
         }
 
-        Hand winner = HandComparator.getWinner(listOfHands);
+        Hand winner = HandEvaluator.getFinalHand(HandComparator.getWinner(listOfHands));
         System.out.println("\n======================");
         System.out.println("Winner: " + HandEvaluator.evaluateHand(winner));
+        System.out.println(winner.toPrettyString(true));
     }
 }
