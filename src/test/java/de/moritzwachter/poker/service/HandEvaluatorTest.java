@@ -1,6 +1,8 @@
 package de.moritzwachter.poker.service;
 
 import de.moritzwachter.poker.model.Hand;
+import de.moritzwachter.poker.model.PokerHand;
+import de.moritzwachter.poker.model.ScoredHand;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -51,7 +53,7 @@ public class HandEvaluatorTest {
 
     @Test
     void hasFourOfAKind() {
-        Hand hand = new Hand("2H 2D 2C 2S 6H");
+        Hand hand = new Hand("2H 2D 2C 2S 5C TC JH");
         assertTrue(HandEvaluator.hasFourOfAKind(hand));
 
         Hand noFourOfAKind = new Hand("2H 3D 4C 5S 6H");
@@ -136,17 +138,23 @@ public class HandEvaluatorTest {
         Hand royalFlush = new Hand("AC TH JH QH KH AH TC");
         assertEquals("AH KH QH JH TH", HandEvaluator.getFinalHand(royalFlush).getHandString());
 
-        Hand fourOfAKind = new Hand("2H 2D 2C 2S 5C TC JH");
-        assertEquals("2H 2D 2C 2S JH", HandEvaluator.getFinalHand(fourOfAKind).getHandString());
-
         Hand straightFlush = new Hand("AC TH 9H QH JH 8H TC");
         assertEquals("QH JH TH 9H 8H", HandEvaluator.getFinalHand(straightFlush).getHandString());
+
+        Hand fourOfAKind = new Hand("2H 2D 2C 2S 5C TC JH");
+        assertEquals("2H 2D 2C 2S JH", HandEvaluator.getFinalHand(fourOfAKind).getHandString());
 
         Hand fullHouse = new Hand("2H 2D 2C 5H 5C TC JH");
         assertEquals("2H 2D 2C 5H 5C", HandEvaluator.getFinalHand(fullHouse).getHandString());
 
         Hand flush = new Hand("AC TH 9H QH JH 2H TC");
         assertEquals("QH JH TH 9H 2H", HandEvaluator.getFinalHand(flush).getHandString());
+
+        Hand straight = new Hand("TH 9H QS JD 8H TC");
+        assertEquals("QS JD TH 9H 8H", HandEvaluator.getFinalHand(straight).getHandString());
+
+        Hand straightWithAce = new Hand("AD 2D 3S 4C 5H TH");
+        assertEquals("AD 5H 4C 3S 2D", HandEvaluator.getFinalHand(straightWithAce).getHandString());
 
         Hand threeOfAKind = new Hand("2H 2D 2C 3H 5C TC JH");
         assertEquals("2H 2D 2C JH TC", HandEvaluator.getFinalHand(threeOfAKind).getHandString());
@@ -159,5 +167,18 @@ public class HandEvaluatorTest {
 
         Hand highCard = new Hand("TH 9C 6S 5C 3S");
         assertEquals("TH 9C 6S 5C 3S", HandEvaluator.getFinalHand(highCard).getHandString());
+    }
+
+    @Test
+    void evaluateCards() {
+        ScoredHand hand = new ScoredHand("2H 3C 4S 5D 6S", PokerHand.STRAIGHT);
+        assertEquals((2 + 3 + 4 + 5 + 6) / 100.0, HandEvaluator.evaluateCards(hand));
+
+        ScoredHand aceStraight = new ScoredHand("2H 3C 4S 5D AS", PokerHand.STRAIGHT);
+        assertEquals((2 + 3 + 4 + 5 + 1) / 100.0, HandEvaluator.evaluateCards(aceStraight));
+
+        ScoredHand fullHouse = new ScoredHand("2H 2C 2S 5D 5S", PokerHand.FULL_HOUSE);
+        assertEquals((2 + 2 + 2 + 5 + 5) / 100.0, HandEvaluator.evaluateCards(fullHouse));
+
     }
 }

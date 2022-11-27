@@ -14,6 +14,12 @@ public class ScoredHand extends Hand {
         this.pokerHand = pokerHand;
     }
 
+    public ScoredHand(String cards, PokerHand pokerHand) {
+        super(cards);
+        this.score = pokerHand.score;
+        this.pokerHand = pokerHand;
+    }
+
     public void addScore(double cardScore) {
         if (cardScore >= 1.0) {
             throw new IllegalArgumentException("Value cannot be higher than 0.9f");

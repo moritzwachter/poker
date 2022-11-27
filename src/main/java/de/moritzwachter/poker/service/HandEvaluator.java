@@ -49,8 +49,8 @@ public class HandEvaluator {
             return getFlush(hand).getHighestCards(5);
         }
 
-        if (hasFlush(hand)) {
-            return getFlush(hand).getHighestCards(5);
+        if (hasStraightFlush(hand)) {
+            return getStraightFlush(hand).getHighestCards(5);
         }
 
         if (hasFourOfAKind(hand)) {
@@ -58,12 +58,12 @@ public class HandEvaluator {
             return Hand.fromHands(fourOfAKind, hand.without(fourOfAKind).getHighestCards(1));
         }
 
-        if (hasStraightFlush(hand)) {
-            return getStraightFlush(hand).getHighestCards(5);
-        }
-
         if (hasFullHouse(hand)) {
             return Hand.fromHands(getNoOfAKind(hand, 3), getNoOfAKind(hand, 2));
+        }
+
+        if (hasFlush(hand)) {
+            return getFlush(hand).getHighestCards(5);
         }
 
         if (hasStraight(hand)) {
@@ -197,13 +197,21 @@ public class HandEvaluator {
     public static boolean hasRoyalFlush(Hand hand) {
         String handString = hand.sorted().getHandString();
         String[] royalFlushHands = {
-                "TH JH QH KH AH",
-                "TC JC QC KC AC",
-                "TS JS QS KS AS",
-                "TD JD QD KD AD"
+            "TH JH QH KH AH",
+            "TC JC QC KC AC",
+            "TS JS QS KS AS",
+            "TD JD QD KD AD"
         };
 
-        return Arrays.stream(royalFlushHands).anyMatch(handString::contains);
+        for (String royalFlushHand : royalFlushHands) {
+            String[] royalFlushCards = royalFlushHand.split(" ");
+
+            if (Arrays.stream(royalFlushCards).allMatch(handString::contains)) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public static double evaluateCards(ScoredHand scored) {
@@ -211,13 +219,13 @@ public class HandEvaluator {
                 .stream()
                 .map(c -> c.getCardValue().value)
                 .mapToInt(Integer::intValue)
-                .sum() / 100.0;
+                .sum();
 
         // "A 2 3 4 5" case:
         if (hasStraight(scored) && scored.sorted().getHandValueString().contains("2 3 4 5 A")) {
-            score -= (Value.ACE.value - 1) / 100.0;
+            score -= (Value.ACE.value - 1);
         }
 
-        return score;
+        return score / 100.0;
     }
 }

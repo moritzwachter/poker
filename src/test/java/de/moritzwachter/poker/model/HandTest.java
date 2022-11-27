@@ -25,6 +25,10 @@ public class HandTest {
         Hand unordered = new Hand("AS 3C JD 5S QH");
         assertEquals("A 3 J 5 Q", unordered.getHandValueString());
         assertEquals("3 5 J Q A", unordered.sorted().getHandValueString());
+
+        Hand royalFlush = new Hand("AH KH QH JH TH");
+        assertEquals("AH KH QH JH TH", royalFlush.getHandString());
+        assertEquals("TH JH QH KH AH", royalFlush.sorted().getHandString());
     }
 
 
