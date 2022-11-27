@@ -19,13 +19,13 @@ public class Main {
 
 
         System.out.println("Community Cards");
-        communityCards.getHand().stream().forEach(c -> System.out.print(c.toPrettyString() + " "));
+        communityCards.getHand().forEach(c -> System.out.print(c.toPrettyString() + " "));
 
         System.out.println("");
         for (int i = 0; i < playerCards.size(); i++) {
             System.out.print("\nPlayer " + (i + 1) + ": ");
 
-            playerCards.get(i).getHand().stream().forEach(c -> System.out.print(c.toPrettyString()));
+            playerCards.get(i).getHand().forEach(c -> System.out.print(c.toPrettyString()));
         }
 
         List<Hand> listOfHands = new ArrayList<>();
