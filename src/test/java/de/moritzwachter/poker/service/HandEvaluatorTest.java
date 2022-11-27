@@ -118,11 +118,17 @@ public class HandEvaluatorTest {
 
     @Test
     void hasRoyalFlush() {
-        Hand hand = new Hand("TH JH QH KH AH");
-        Hand hand2 = new Hand("TC JC QC KC AC");
-        assertTrue(HandEvaluator.hasRoyalFlush(hand));
-        assertFalse(HandEvaluator.hasRoyalFlush(hand2));
-        assertTrue(HandEvaluator.hasStraightFlush(hand2));
+        Hand hearts = new Hand("TH JH QH KH AH");
+        Hand clubs = new Hand("TC JC QC KC AC");
+        Hand spades = new Hand("TS JS QS KS AS");
+        Hand diamonds = new Hand("TD JD QD KD AD");
+
+        assertTrue(HandEvaluator.hasRoyalFlush(hearts));
+        assertTrue(HandEvaluator.hasRoyalFlush(clubs));
+        assertTrue(HandEvaluator.hasRoyalFlush(spades));
+        assertTrue(HandEvaluator.hasRoyalFlush(diamonds));
+
+        assertFalse(HandEvaluator.hasRoyalFlush(new Hand("9H TC JH QH KH AH")));
     }
 
     @Test

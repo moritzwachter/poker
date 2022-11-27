@@ -208,6 +208,14 @@ public class HandEvaluator {
     }
 
     public static boolean hasRoyalFlush(Hand hand) {
-        return hand.sorted().getHandString().contains("TH JH QH KH AH");
+        String handString = hand.sorted().getHandString();
+        String[] royalFlushHands = {
+                "TH JH QH KH AH",
+                "TC JC QC KC AC",
+                "TS JS QS KS AS",
+                "TD JD QD KD AD"
+        };
+
+        return Arrays.stream(royalFlushHands).anyMatch(handString::contains);
     }
 }
