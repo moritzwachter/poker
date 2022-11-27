@@ -8,31 +8,27 @@ import java.util.stream.Collectors;
 public class HandEvaluator {
 
     public static PokerHand evaluateHand(Hand hand) {
-        PokerHand pokerHand;
-        
         if (hasRoyalFlush(hand)) {
-            pokerHand = PokerHand.ROYAL_FLUSH;
+            return PokerHand.ROYAL_FLUSH;
         } else if (hasStraightFlush(hand)) {
-            pokerHand = PokerHand.STRAIGHT_FLUSH;
+            return PokerHand.STRAIGHT_FLUSH;
         } else if (hasFourOfAKind(hand)) {
-            pokerHand = PokerHand.FOUR_OF_A_KIND;
+            return PokerHand.FOUR_OF_A_KIND;
         } else if (hasFullHouse(hand)) {
-            pokerHand = PokerHand.FULL_HOUSE;
+            return PokerHand.FULL_HOUSE;
         } else if (hasFlush(hand)) {
-            pokerHand = PokerHand.FLUSH;
+            return PokerHand.FLUSH;
         } else if (hasStraight(hand)) {
-            pokerHand = PokerHand.STRAIGHT;
+            return PokerHand.STRAIGHT;
         } else if (hasThreeOfAKind(hand)) {
-            pokerHand = PokerHand.THREE_OF_A_KIND;
+            return PokerHand.THREE_OF_A_KIND;
         } else if (hasTwoPair(hand)) {
-            pokerHand = PokerHand.TWO_PAIR;
+            return PokerHand.TWO_PAIR;
         } else if (hasPair(hand)) {
-            pokerHand = PokerHand.ONE_PAIR;
+            return PokerHand.ONE_PAIR;
         } else {
-            pokerHand = PokerHand.HIGH_CARD;
+            return PokerHand.HIGH_CARD;
         }
-
-        return pokerHand;
     }
 
     public static Hand getFlush(Hand hand) {

@@ -46,12 +46,22 @@ public class Main {
 
         if (winners.size() > 1) {
             System.out.println("Split pot! The winners are: ");
-            winners.forEach(h -> {
-                System.out.printf("%s (%s) - %s %n", HandEvaluator.evaluateHand(h), h.getScore(), h.toPrettyString());
+            winners.forEach(hand -> {
+                System.out.printf(
+                    "%s (%s) - %s %n",
+                    HandEvaluator.evaluateHand(hand),
+                    hand.getScore(),
+                    hand.sorted().toPrettyString()
+                );
             });
         } else {
             ScoredHand winner = winners.get(0);
-            System.out.printf("The winner is: %s (%s)%n", HandEvaluator.evaluateHand(winner), winner.getScore());
+            System.out.printf(
+                "The winner is: %s (%s) - %s %n",
+                HandEvaluator.evaluateHand(winner),
+                winner.getScore(),
+                winner.sorted().toPrettyString()
+            );
         }
     }
 
