@@ -1,51 +1,38 @@
 package de.moritzwachter.poker.service;
 
-import de.moritzwachter.poker.model.Card;
-import de.moritzwachter.poker.model.Hand;
-import de.moritzwachter.poker.model.Symbol;
+import de.moritzwachter.poker.model.*;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 public class HandEvaluator {
 
-    public static Float evaluateHand(Hand hand) {
-        // System.out.println("\n" + hand.toPrettyString(true));
-
-        /*System.out.print(hasPair(hand) ? "Pair\n" : "");
-        System.out.print(hasTwoPair(hand) ? "Two Pair\n" : "");
-        System.out.print(hasThreeOfAKind(hand) ? "Three of a kind\n" : "");
-        System.out.print(hasFullHouse(hand) ? "Full house\n" : "");
-        System.out.print(hasFourOfAKind(hand) ? "Four of a kind\n" : "");
-        System.out.print(hasFlush(hand) ? "Flush\n" : "");
-        System.out.print(hasStraight(hand) ? "Straight\n" : "");
-        System.out.print(hasStraightFlush(hand) ? "Straight Flush\n" : "");
-        System.out.print(hasRoyalFlush(hand) ? "Royal Flush\n" : "");*/
-        float score;
+    public static PokerHand evaluateHand(Hand hand) {
+        PokerHand pokerHand;
         
         if (hasRoyalFlush(hand)) {
-            score = 10.0f;
+            pokerHand = PokerHand.ROYAL_FLUSH;
         } else if (hasStraightFlush(hand)) {
-            score = 9.0f;
+            pokerHand = PokerHand.STRAIGHT_FLUSH;
         } else if (hasFourOfAKind(hand)) {
-            score = 8.0f;
+            pokerHand = PokerHand.FOUR_OF_A_KIND;
         } else if (hasFullHouse(hand)) {
-            score = 7.0f;
+            pokerHand = PokerHand.FULL_HOUSE;
         } else if (hasFlush(hand)) {
-            score = 6.0f;
+            pokerHand = PokerHand.FLUSH;
         } else if (hasStraight(hand)) {
-            score = 5.0f;
+            pokerHand = PokerHand.STRAIGHT;
         } else if (hasThreeOfAKind(hand)) {
-            score = 4.0f;
+            pokerHand = PokerHand.THREE_OF_A_KIND;
         } else if (hasTwoPair(hand)) {
-            score = 3.0f;
+            pokerHand = PokerHand.TWO_PAIR;
         } else if (hasPair(hand)) {
-            score = 2.0f;
+            pokerHand = PokerHand.ONE_PAIR;
         } else {
-            score = 1.0f;
+            pokerHand = PokerHand.HIGH_CARD;
         }
 
-        return score;
+        return pokerHand;
     }
 
     public static Hand getFlush(Hand hand) {
@@ -217,5 +204,20 @@ public class HandEvaluator {
         };
 
         return Arrays.stream(royalFlushHands).anyMatch(handString::contains);
+    }
+
+    public static double evaluateCards(ScoredHand scored) {
+        double score = scored.getHand()
+                .stream()
+                .map(c -> c.getCardValue().value)
+                .mapToInt(Integer::intValue)
+                .sum() / 100.0;
+
+        // "A 2 3 4 5" case:
+        if (hasStraight(scored) && scored.sorted().getHandValueString().contains("2 3 4 5 A")) {
+            score -= (Value.ACE.value - 1) / 100.0;
+        }
+
+        return score;
     }
 }

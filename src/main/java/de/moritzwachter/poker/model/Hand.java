@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class Hand {
     @Getter
-    private List<Card> hand = new ArrayList<>();
+    private final List<Card> hand = new ArrayList<>();
 
     public Hand(String allCards) {
         String[] cards = allCards.split("\\s");
@@ -62,11 +62,7 @@ public class Hand {
         return new Hand(hand.stream().sorted(Collections.reverseOrder()).toList());
     }
 
-    public String toPrettyString(boolean sorted) {
-        if (sorted) {
-            return hand.stream().sorted().map(Card::toPrettyString).collect(Collectors.joining(" "));
-        }
-
+    public String toPrettyString() {
         return hand.stream().map(Card::toPrettyString).collect(Collectors.joining(" "));
     }
 

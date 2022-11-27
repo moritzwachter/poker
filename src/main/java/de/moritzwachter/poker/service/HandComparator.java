@@ -1,20 +1,24 @@
 package de.moritzwachter.poker.service;
 
 import de.moritzwachter.poker.model.Hand;
+import de.moritzwachter.poker.model.ScoredHand;
 
 import java.util.*;
 
 public class HandComparator {
 
-    public static Hand getWinner(List<Hand> listOfHands) {
-        SortedMap<Float, Hand> scoredHands = new TreeMap<>();
+    public static List<ScoredHand> getWinners(List<Hand> listOfHands) {
+        Map<ScoredHand, Double> scoredHands = new HashMap<>();
 
         for (Hand hand : listOfHands) {
-            Float score = HandEvaluator.evaluateHand(hand);
+            ScoredHand scored = new ScoredHand(hand, HandEvaluator.evaluateHand(hand));
+            scored.addScore(HandEvaluator.evaluateCards(scored));
 
-            scoredHands.put(score, hand);
+            scoredHands.put(scored, scored.getScore());
         }
 
-        return scoredHands.get(scoredHands.lastKey());
+        Double maxValue = Collections.max(scoredHands.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getValue();
+
+        return scoredHands.keySet().stream().filter(hand -> hand.getScore() == maxValue).toList();
     }
 }
