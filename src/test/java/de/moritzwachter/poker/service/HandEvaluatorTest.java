@@ -97,7 +97,13 @@ public class HandEvaluatorTest {
         Hand hand = new Hand("TH TC 2C 2D 4S");
         Hand firstPair = HandEvaluator.getNoOfAKind(hand, 2);
 
-        assertEquals("TH TC 2C 2D", firstPair.getHandString());
+        assertEquals("TH TC", firstPair.getHandString());
+        assertEquals("2C 2D", HandEvaluator.getNoOfAKind(hand.without(firstPair), 2).getHandString());
+
+        Hand edgeCase = new Hand("TH TC 2C 2D 4S 4C");
+        Hand bestPair = HandEvaluator.getNoOfAKind(hand, 2);
+
+        assertEquals("TH TC", bestPair.getHandString());
     }
 
     @Test

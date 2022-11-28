@@ -72,7 +72,10 @@ public class HandEvaluator {
         }
 
         if (hasTwoPair(hand)) {
-            Hand twoPair = getNoOfAKind(hand, 2);
+            Hand firstPair = getNoOfAKind(hand, 2);
+            Hand secondPair = getNoOfAKind(hand.without(firstPair), 2);
+
+            Hand twoPair = Hand.fromHands(firstPair, secondPair);
             return Hand.fromHands(twoPair, hand.without(twoPair).getHighestCards(1));
         }
 
@@ -144,7 +147,7 @@ public class HandEvaluator {
     public static boolean hasTwoPair(Hand hand) {
         Hand partialHand = getNoOfAKind(hand, 2);
 
-        return partialHand.getHand().size() >= 4;
+        return getNoOfAKind(hand.without(partialHand), 2).getHand().size() == 2;
     }
 
     public static boolean hasThreeOfAKind(Hand hand) {
@@ -170,6 +173,10 @@ public class HandEvaluator {
             if (Collections.frequency(hand.getHand(), card) == n) {
                 partialHand.add(card);
             }
+        }
+
+        if (partialHand.getHand().size() > n) {
+            return partialHand.getHighestCards(n);
         }
 
         return partialHand;
