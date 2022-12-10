@@ -231,4 +231,19 @@ public class HandEvaluator {
 
         return score / 100.0;
     }
+
+    public static List<ScoredHand> getWinners(List<Hand> listOfHands) {
+        Map<ScoredHand, Double> scoredHands = new HashMap<>();
+
+        for (Hand hand : listOfHands) {
+            ScoredHand scored = new ScoredHand(hand, HandEvaluator.evaluateHand(hand));
+            scored.addScore(HandEvaluator.evaluateCards(scored));
+
+            scoredHands.put(scored, scored.getScore());
+        }
+
+        Double maxValue = Collections.max(scoredHands.entrySet(), Comparator.comparingDouble(Map.Entry::getValue)).getValue();
+
+        return scoredHands.keySet().stream().filter(hand -> hand.getScore() == maxValue).toList();
+    }
 }

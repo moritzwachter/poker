@@ -3,7 +3,6 @@ package de.moritzwachter.poker;
 import de.moritzwachter.poker.model.Hand;
 import de.moritzwachter.poker.model.ScoredHand;
 import de.moritzwachter.poker.service.Dealer;
-import de.moritzwachter.poker.service.HandComparator;
 import de.moritzwachter.poker.service.HandEvaluator;
 
 import java.util.ArrayList;
@@ -23,7 +22,7 @@ public class Main {
 
         List<Hand> listOfHands = collectFinalHands(communityCards, playerCards);
 
-        List<ScoredHand> winners = HandComparator.getWinners(listOfHands);
+        List<ScoredHand> winners = HandEvaluator.getWinners(listOfHands);
         printWinners(winners);
     }
 
