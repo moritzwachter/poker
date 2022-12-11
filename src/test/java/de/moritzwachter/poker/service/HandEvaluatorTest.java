@@ -5,6 +5,9 @@ import de.moritzwachter.poker.model.PokerHand;
 import de.moritzwachter.poker.model.ScoredHand;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class HandEvaluatorTest {
@@ -186,5 +189,33 @@ public class HandEvaluatorTest {
         ScoredHand fullHouse = new ScoredHand("2H 2C 2S 5D 5S", PokerHand.FULL_HOUSE);
         assertEquals((2 + 2 + 2 + 5 + 5) / 100.0, HandEvaluator.evaluateCards(fullHouse));
 
+    }
+
+    @Test
+    void getWinnersFullHouse() {
+        List<Hand> fullHouseHands = new ArrayList<>();
+
+        Hand smallerFullHouse = new Hand("5S 5C 5D 9H 9D");
+        Hand biggerFullHouse = new Hand("5S 5C 9S 9H 9D");
+        fullHouseHands.add(smallerFullHouse);
+        fullHouseHands.add(biggerFullHouse);
+
+        List<ScoredHand> winners = HandEvaluator.getWinners(fullHouseHands);
+        assertEquals(1, winners.size());
+        assertEquals(winners.get(0).getHandString(), biggerFullHouse.getHandString());
+    }
+
+    @Test
+    void getWinnersSameTwoPair() {
+        List<Hand> listOfHands = new ArrayList<>();
+
+        Hand twoPair = new Hand("5S 5C 9H 9D KH");
+        Hand sameTwoPair = new Hand("5S 5C 9H 9D KH");
+        listOfHands.add(twoPair);
+        listOfHands.add(sameTwoPair);
+
+        List<ScoredHand> winners = HandEvaluator.getWinners(listOfHands);
+        assertEquals(2, winners.size());
+        assertEquals(winners.get(1).getHandString(), winners.get(0).getHandString());
     }
 }
